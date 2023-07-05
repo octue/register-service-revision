@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "register-service-revision"
+version = "0.1.0"
+description = "A GitHub action that registers a revision of an Octue service in a service registry."
+authors = ["Marcus Lugg <marcus@octue.com>"]
+readme = "README.md"
+packages = [{include = "register_service_revision"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
