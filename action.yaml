@@ -1,0 +1,30 @@
+name: "Register service revision"
+description: "Register a service revision for an Octue service."
+author: "Marcus Lugg"
+
+branding:
+  icon: cloud
+  color: blue
+
+inputs:
+  service_namespace:
+    description: "The namespace the Octue service belongs to in kebab case."
+    required: true
+  service_name:
+    description: "The name of the Octue service in kebab case, unique within its namespace."
+    required: true
+  service_revision_tag:
+    description: "The service revision tag (e.g. 1.0.7)."
+    required: true
+  service_registry_endpoint:
+    description: "The HTTP/HTTPS endpoint of the service registry to register the revision in."
+    required: true
+
+runs:
+  using: "docker"
+  image: "docker://octue/register-service-revision:0.1.0"
+  args:
+    - ${{ inputs.service_namespace }}
+    - ${{ inputs.service_name }}
+    - ${{ inputs.service_revision_tag }}
+    - ${{ inputs.service_registry_endpoint }}
