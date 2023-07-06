@@ -1,6 +1,11 @@
+import logging
 import sys
 
 import requests
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def register_service_revision(namespace, name, revision_tag, registry_endpoint):
@@ -12,15 +17,9 @@ def register_service_revision(namespace, name, revision_tag, registry_endpoint):
     :param str registry_endpoint: the URL of the service registry's service registration endpoint
     :return None:
     """
-    response = requests.post(
-        registry_endpoint,
-        json={
-            "namespace": namespace,
-            "name": name,
-            "revision_tag": revision_tag,
-        },
-    )
-
+    data = {"namespace": namespace, "name": name, "revision_tag": revision_tag}
+    logger.info("Attempting to register service revision %r with registry %r", data, registry_endpoint)
+    response = requests.post(registry_endpoint, json=data)
     response.raise_for_status()
 
 
