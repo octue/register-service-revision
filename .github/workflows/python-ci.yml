@@ -17,3 +17,30 @@ jobs:
         with:
           path: pyproject.toml
           breaking_change_indicated_by: minor
+
+  run-tests:
+    if: "!contains(github.event.head_commit.message, 'skipci')"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3.2
+
+      - name: Check pyproject.toml file
+        run: poetry check
+
+      - name: Run tests
+        run: python -m unittest
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: coverage.xml
+          fail_ci_if_error: true
