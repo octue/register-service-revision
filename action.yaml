@@ -22,7 +22,7 @@ inputs:
 
 runs:
   using: "docker"
-  image: "docker://octue/register-service-revision:0.1.0"
+  image: "docker://octue/register-service-revision:0.1.1"
   args:
     - ${{ inputs.service_namespace }}
     - ${{ inputs.service_name }}
