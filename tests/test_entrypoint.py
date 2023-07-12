@@ -28,12 +28,17 @@ class TestEntrypoint(unittest.TestCase):
         mock_response = requests.Response()
         mock_response.status_code = 201
 
-        with patch("requests.post", return_value=mock_response) as mock_post:
-            register_service_revision(
-                namespace="my-org",
-                name="my-service",
-                revision_tag="0.1.0",
-                registry_endpoint="https://blah.com/services",
-            )
+        for registry_endpoint in ("https://blah.com/services", "https://blah.com/services/"):
+            with self.subTest(registry_endpoint=registry_endpoint):
+                with patch("requests.post", return_value=mock_response) as mock_post:
+                    register_service_revision(
+                        namespace="my-org",
+                        name="my-service",
+                        revision_tag="0.1.0",
+                        registry_endpoint=registry_endpoint,
+                    )
 
-        mock_post.assert_called_with("https://blah.com/services/my-org/my-service", json={"revision_tag": "0.1.0"})
+                mock_post.assert_called_with(
+                    "https://blah.com/services/my-org/my-service",
+                    json={"revision_tag": "0.1.0"},
+                )
