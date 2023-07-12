@@ -2,7 +2,6 @@ import logging
 import sys
 
 import requests
-from requests.compat import urljoin
 
 
 logging.basicConfig(level=logging.INFO)
@@ -26,7 +25,7 @@ def register_service_revision(namespace, name, revision_tag, registry_endpoint):
         registry_endpoint,
     )
 
-    response = requests.post(urljoin(registry_endpoint, f"{namespace}/{name}"), json={"revision_tag": revision_tag})
+    response = requests.post(f"{registry_endpoint.strip('/')}/{namespace}/{name}", json={"revision_tag": revision_tag})
     response.raise_for_status()
 
 
