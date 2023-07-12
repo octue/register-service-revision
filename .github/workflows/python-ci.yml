@@ -36,6 +36,9 @@ jobs:
       - name: Check pyproject.toml file
         run: poetry check
 
+      - name: Install package
+        run: poetry install
+
       - name: Run tests
         run: python -m unittest
 
