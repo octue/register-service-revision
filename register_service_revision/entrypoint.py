@@ -17,9 +17,15 @@ def register_service_revision(namespace, name, revision_tag, registry_endpoint):
     :param str registry_endpoint: the URL of the service registry's service registration endpoint
     :return None:
     """
-    data = {"namespace": namespace, "name": name, "revision_tag": revision_tag}
-    logger.info("Attempting to register service revision %r with registry %r", data, registry_endpoint)
-    response = requests.post(registry_endpoint, json=data)
+    logger.info(
+        "Attempting to register service revision '%s/%s:%s' with registry %r.",
+        namespace,
+        name,
+        revision_tag,
+        registry_endpoint,
+    )
+
+    response = requests.post(f"{registry_endpoint.strip('/')}/{namespace}/{name}", json={"revision_tag": revision_tag})
     response.raise_for_status()
 
 
