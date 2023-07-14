@@ -17,7 +17,7 @@ steps:
     # run: echo "PACKAGE_VERSION=$(python setup.py --version)" >> $GITHUB_OUTPUT  <- Use this instead if your package uses a `setup.py` file.
 
   - name: Register service revision
-    uses: octue/register-service-revision@0.1.1
+    uses: octue/register-service-revision@0.2.0
     with:
       service_namespace: my-org
       service_name: my-service
