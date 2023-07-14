@@ -35,9 +35,11 @@ def register_service_revision(namespace, name, revision_tag, registry_endpoint, 
             is_default = False
 
         body["is_default"] = is_default
+        logger.info("Setting service revision `is_default=%r`.", is_default)
 
     response = requests.post(f"{registry_endpoint.strip('/')}/{namespace}/{name}", json=body)
     response.raise_for_status()
+    logger.info("Service revision registered successfully.")
 
 
 if __name__ == "__main__":
