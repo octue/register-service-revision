@@ -42,3 +42,45 @@ class TestEntrypoint(unittest.TestCase):
                     "https://blah.com/services/my-org/my-service",
                     json={"revision_tag": "0.1.0"},
                 )
+
+    def test_with_is_default_specified_as_true(self):
+        """Test that setting `is_default` as `True` works."""
+        mock_response = requests.Response()
+        mock_response.status_code = 201
+
+        for is_default in ("true", "True", "TRUE"):
+            with self.subTest(is_default=is_default):
+                with patch("requests.post", return_value=mock_response) as mock_post:
+                    register_service_revision(
+                        namespace="my-org",
+                        name="my-service",
+                        revision_tag="0.1.0",
+                        registry_endpoint="https://blah.com/services",
+                        is_default=is_default,
+                    )
+
+                mock_post.assert_called_with(
+                    "https://blah.com/services/my-org/my-service",
+                    json={"revision_tag": "0.1.0", "is_default": True},
+                )
+
+    def test_with_is_default_specified_as_false(self):
+        """Test that setting `is_default` as `False` works."""
+        mock_response = requests.Response()
+        mock_response.status_code = 201
+
+        for is_default in ("false", "False", "FALSE"):
+            with self.subTest(is_default=is_default):
+                with patch("requests.post", return_value=mock_response) as mock_post:
+                    register_service_revision(
+                        namespace="my-org",
+                        name="my-service",
+                        revision_tag="0.1.0",
+                        registry_endpoint="https://blah.com/services",
+                        is_default=is_default,
+                    )
+
+                mock_post.assert_called_with(
+                    "https://blah.com/services/my-org/my-service",
+                    json={"revision_tag": "0.1.0", "is_default": False},
+                )

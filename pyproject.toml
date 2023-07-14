@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "register-service-revision"
-version = "0.1.1"
+version = "0.2.0"
 description = "A GitHub action that registers a revision of an Octue service in a service registry."
 authors = ["Marcus Lugg <marcus@octue.com>"]
 readme = "README.md"
